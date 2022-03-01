@@ -6,8 +6,7 @@
 ;(async () => {
   // Constants
   const CM_CDN = 'https://cdn.jsdelivr.net/npm/codemirror@5.65.1'
-  const WMGH_CDN =
-    'https://cdn.jsdelivr.net/gh/wikimedia/mediawiki-extensions-CodeMirror@REL1_37'
+  const MW_CDN = 'https://cdn.jsdelivr.net/gh/bhsd-harry/codemirror-mediawiki@1.3'
   const PLUGIN_CDN = InPageEdit.api.pluginCDN
   const USING_LOCAL = mw.loader.getState('ext.CodeMirror') !== null
   const THEME =
@@ -26,7 +25,7 @@
         css: ['ext.CodeMirror.lib.mode.css'],
         javascript: ['ext.CodeMirror.lib.mode.javascript'],
         lua: `${CM_CDN}/mode/lua/lua.min.js`,
-        mediawiki: ['ext.CodeMirror.mode.mediawiki', 'ext.CodeMirror.data'],
+        mediawiki: ['ext.CodeMirror.data'],
         widget: [
           'ext.CodeMirror.lib.mode.htmlmixed',
           'ext.CodeMirror.mode.mediawiki',
@@ -37,7 +36,7 @@
         css: `${CM_CDN}/mode/css/css.min.js`,
         javascript: `${CM_CDN}/mode/javascript/javascript.min.js`,
         lua: `${CM_CDN}/mode/lua/lua.min.js`,
-        mediawiki: `${WMGH_CDN}/resources/mode/mediawiki/mediawiki.min.js`,
+        mediawiki: null,
         htmlmixed: `${CM_CDN}/mode/htmlmixed/htmlmixed.min.js`,
         xml: `${CM_CDN}/mode/xml/xml.min.js`,
         widget: null,
@@ -106,11 +105,12 @@
         },
       })
     } else {
-      if (type === 'mediawiki' && !USING_LOCAL) {
+      if (type === 'mediawiki') {
         mw.loader.load(
-          `${WMGH_CDN}/resources/mode/mediawiki/mediawiki.min.css`,
+          `${MW_CDN}/mediawiki.min.css`,
           'text/css'
         )
+        mw.loader.load(`${MW_CDN}/mediawiki.min.js`)
       }
       await getScript(MODE_LIST[type])
     }
