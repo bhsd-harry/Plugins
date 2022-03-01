@@ -6,7 +6,7 @@
 ;(async () => {
   // Constants
   const CM_CDN = 'https://cdn.jsdelivr.net/npm/codemirror@5.65.1'
-  const MW_CDN = 'https://cdn.jsdelivr.net/gh/bhsd-harry/codemirror-mediawiki@1.3'
+  const MW_CDN = 'https://cdn.jsdelivr.net/gh/bhsd-harry/codemirror-mediawiki@1.4'
   const PLUGIN_CDN = InPageEdit.api.pluginCDN
   const USING_LOCAL = mw.loader.getState('ext.CodeMirror') !== null
   const THEME =
