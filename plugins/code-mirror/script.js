@@ -105,11 +105,13 @@
           noinclude: [[null, null, 'mediawiki']],
         },
       })
+    } else if (type === 'mediawiki') {
+      mw.loader.load(`${MW_CDN}/mediawiki.min.css`, 'text/css')
+      await Promise.all([
+        getScript(`${MW_CDN}/mediawiki.min.js`),
+        getScript(MODE_LIST[type]),
+      ])
     } else {
-      if (type === 'mediawiki') {
-        mw.loader.load(`${MW_CDN}/mediawiki.min.css`, 'text/css')
-        mw.loader.load(`${MW_CDN}/mediawiki.min.js`)
-      }
       await getScript(MODE_LIST[type])
     }
     LOADED_MODE[type] = true
