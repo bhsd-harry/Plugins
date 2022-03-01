@@ -37,10 +37,10 @@
         css: `${CM_CDN}/mode/css/css.min.js`,
         javascript: `${CM_CDN}/mode/javascript/javascript.min.js`,
         lua: `${CM_CDN}/mode/lua/lua.min.js`,
-        mediawiki: null,
+        mediawiki: [],
         htmlmixed: `${CM_CDN}/mode/htmlmixed/htmlmixed.min.js`,
         xml: `${CM_CDN}/mode/xml/xml.min.js`,
-        widget: null,
+        widget: [],
       }
 
   if (!USING_LOCAL) {
