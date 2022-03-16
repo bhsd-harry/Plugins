@@ -1,3 +1,4 @@
+mw.loader.addStyleTag(`
 /**
  * GNU Public License
  *
@@ -560,7 +561,7 @@
 .in-page-edit label input[type='checkbox'] + span::before,
 .in-page-edit label input[type='radio'] + span::before {
   /* 不换行空格可以保持选择框的高度 */
-  content: '\a0';
+  content: '\\a0';
   display: inline-block;
   width: 1.2em;
   height: 1.2em;
@@ -580,7 +581,7 @@
 }
 
 .in-page-edit label input[type='checkbox']:checked + span::before {
-  content: '\a0';
+  content: '\\a0';
   background-color: #36c;
   background-image: url(data:image/svg+xml;base64,PHN2ZyBzdHlsZT0iZmlsbC1ydWxlOmV2ZW5vZGQ7Y2xpcC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kOyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMTYgMTYiPjxnIGlkPSJjaGVja21hcmsiPjxwYXRoIGQ9Ik0xMy43NDkyKzMuNDkwOTVMNS44NjMxMisxMS42MzM3TDIuMjUwNzcrNy45NjA4MkwxLjQ4NzYrOC43NTc3OEw1Ljg2MzEyKzEzLjE5M0wxNC41MTI0KzQuMjg3OUwxMy43NDkyKzMuNDkwOTVaIiBvcGFjaXR5PSIxIiBmaWxsPSIjZmZmZmZmIi8+PC9nPjwvc3ZnPg==);
   background-repeat: no-repeat;
@@ -719,7 +720,7 @@
 }
 
 #toolbox-toggle.click:before {
-  content: '\f023'; /*fa-lock*/
+  content: '\\f023'; /*fa-lock*/
   font-family: 'FontAwesome';
   display: block;
   position: absolute;
@@ -865,3 +866,4 @@
   -webkit-animation-duration: 500ms;
   animation-duration: 500ms;
 }
+`)
