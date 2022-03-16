@@ -30,6 +30,4 @@ mw.hook('InPageEdit.quickEdit').add(({ $editArea, $modalContent }) => {
 })
 
 // @TODO 必须保证 wikiEditor 提前加载
-mw.hook('InPageEdit').add(() => {
-  mw.loader.load('ext.wikiEditor')
-})
+mw.loader.load('ext.wikiEditor')
