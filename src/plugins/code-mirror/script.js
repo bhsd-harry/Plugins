@@ -6,9 +6,9 @@
 mw.hook('InPageEdit').add(({ InPageEdit }) =>
   (async () => {
     // Constants
-    const CM_CDN = 'https://cdn.jsdelivr.net/npm/codemirror@5.65.1'
+    const CM_CDN = 'https://fastly.jsdelivr.net/npm/codemirror@5.65.1'
     const MW_CDN =
-      'https://cdn.jsdelivr.net/gh/bhsd-harry/codemirror-mediawiki@1.5'
+      'https://fastly.jsdelivr.net/gh/bhsd-harry/codemirror-mediawiki@1.1.1'
     const PLUGIN_CDN = InPageEdit.api.pluginCDN
     const USING_LOCAL = mw.loader.getState('ext.CodeMirror') !== null
     const THEME =
@@ -20,7 +20,7 @@ mw.hook('InPageEdit').add(({ InPageEdit }) =>
       localStorage.getItem('InPageEditMwConfig') || '{}'
     )
     const SITE_ID = `${conf.wgServerName}${conf.wgScriptPath}`
-    const SITE_SETTINGS = ALL_SETTINGS_CACHE[SITE_ID] || {}
+    const SITE_SETTINGS = ALL_SETTINGS_CACHE[SITE_ID]
 
     const MODE_LIST = USING_LOCAL
       ? {
@@ -49,10 +49,7 @@ mw.hook('InPageEdit').add(({ InPageEdit }) =>
     }
     mw.loader.load(`${PLUGIN_CDN}/plugins/code-mirror/style.css`, 'text/css')
     if (!InPageEdit.preference.get('codeMirrorThemeNoCSS')) {
-      mw.loader.load(
-        `${CM_CDN}/theme/${THEME.split(' ')[0]}.min.css`,
-        'text/css'
-      )
+      mw.loader.load(`${CM_CDN}/theme/${THEME.split(' ')[0]}.min.css`, 'text/css')
     }
 
     function getScript(url) {
@@ -67,9 +64,9 @@ mw.hook('InPageEdit').add(({ InPageEdit }) =>
     }
 
     // Load Code Mirror
-    await (USING_LOCAL
-      ? mw.loader.using('ext.CodeMirror.lib')
-      : getScript(`${CM_CDN}/lib/codemirror.min.js`))
+    USING_LOCAL
+      ? await mw.loader.using('ext.CodeMirror.lib')
+      : await getScript(`${CM_CDN}/lib/codemirror.min.js`)
     // Load addons
     const wikiEditor = InPageEdit.preference
       .get('plugins')
@@ -102,17 +99,13 @@ mw.hook('InPageEdit').add(({ InPageEdit }) =>
         return true
       }
       // 加载渲染器
-      if (MODE_LIST[type] === undefined) {
-        return false
-      }
+      if (MODE_LIST[type] === undefined) return false
       if (type === 'widget') {
         if (USING_LOCAL) {
           await getScript(MODE_LIST[type])
-          /* eslint-disable require-atomic-updates */
           LOADED_MODE.css = true
           LOADED_MODE.javascript = true
           LOADED_MODE.mediawiki = true
-          /* eslint-enable require-atomic-updates */
         } else {
           await Promise.all(
             ['css', 'javascript', 'mediawiki', 'htmlmixed', 'xml'].map(initMode)
@@ -133,7 +126,7 @@ mw.hook('InPageEdit').add(({ InPageEdit }) =>
       } else {
         await getScript(MODE_LIST[type])
       }
-      LOADED_MODE[type] = true // eslint-disable-line require-atomic-updates
+      LOADED_MODE[type] = true
       return true
     }
 
@@ -144,14 +137,13 @@ mw.hook('InPageEdit').add(({ InPageEdit }) =>
       if (!['mediawiki', 'widget'].includes(type)) {
         return
       }
-      // eslint-disable-next-line max-len
       /** @type {{ tagModes: { pre: string, nowiki:string }, tags: Record<string, boolean>, doubleUnderscore: Record<string, boolean>[], functionSynonyms: Record<string, boolean>[], urlProtocols: string }} */
       let config = mw.config.get('extCodeMirrorConfig')
       if (config) {
         return config
       }
-      if (SITE_SETTINGS.time > Date.now() - 86400 * 1000 * 3) {
-        ;({ config } = SITE_SETTINGS) // eslint-disable-line no-extra-semi
+      if (SITE_SETTINGS?.time > Date.now() - 86400 * 1000 * 3) {
+        config = SITE_SETTINGS.config
         mw.config.set('extCodeMirrorConfig', config)
         return config
       }
@@ -243,8 +235,9 @@ mw.hook('InPageEdit').add(({ InPageEdit }) =>
         return 'lua'
       } else if (page.startsWith(`${NS_WIDGET}:`) && !page.endsWith('/doc')) {
         return 'widget'
+      } else {
+        return 'mediawiki'
       }
-      return 'mediawiki'
     }
 
     /**
@@ -258,7 +251,7 @@ mw.hook('InPageEdit').add(({ InPageEdit }) =>
       target.before(clearDiv)
       target.after(clearDiv)
 
-      const mode = getPageMode(page)
+      let mode = getPageMode(page)
       const [mwConfig] = await Promise.all([getMwConfig(mode), initMode(mode)])
 
       if (target.length) {
@@ -277,8 +270,8 @@ mw.hook('InPageEdit').add(({ InPageEdit }) =>
           mwConfig,
         })
         cm.refresh()
-        cm.on('change', (_, { origin }) => {
-          if (origin === 'setValue') {
+        cm.on('change', function (_, { origin }) {
+          if (origin == 'setValue') {
             return
           }
           target.trigger('input')
