@@ -24,25 +24,25 @@ mw.hook('InPageEdit').add(({ InPageEdit }) =>
 
     const MODE_LIST = USING_LOCAL
       ? {
-          css: ['ext.CodeMirror.lib.mode.css'],
-          javascript: ['ext.CodeMirror.lib.mode.javascript'],
-          lua: `${CM_CDN}/mode/lua/lua.min.js`,
-          mediawiki: ['ext.CodeMirror.data'],
-          widget: [
-            'ext.CodeMirror.lib.mode.htmlmixed',
-            'ext.CodeMirror.mode.mediawiki',
-            'ext.CodeMirror.data',
-          ],
-        }
+        css: ['ext.CodeMirror.lib.mode.css'],
+        javascript: ['ext.CodeMirror.lib.mode.javascript'],
+        lua: `${CM_CDN}/mode/lua/lua.min.js`,
+        mediawiki: ['ext.CodeMirror.data'],
+        widget: [
+          'ext.CodeMirror.lib.mode.htmlmixed',
+          'ext.CodeMirror.mode.mediawiki',
+          'ext.CodeMirror.data',
+        ],
+      }
       : {
-          css: `${CM_CDN}/mode/css/css.min.js`,
-          javascript: `${CM_CDN}/mode/javascript/javascript.min.js`,
-          lua: `${CM_CDN}/mode/lua/lua.min.js`,
-          mediawiki: [],
-          htmlmixed: `${CM_CDN}/mode/htmlmixed/htmlmixed.min.js`,
-          xml: `${CM_CDN}/mode/xml/xml.min.js`,
-          widget: [],
-        }
+        css: `${CM_CDN}/mode/css/css.min.js`,
+        javascript: `${CM_CDN}/mode/javascript/javascript.min.js`,
+        lua: `${CM_CDN}/mode/lua/lua.min.js`,
+        mediawiki: [],
+        htmlmixed: `${CM_CDN}/mode/htmlmixed/htmlmixed.min.js`,
+        xml: `${CM_CDN}/mode/xml/xml.min.js`,
+        widget: [],
+      }
 
     if (!USING_LOCAL) {
       mw.loader.load(`${CM_CDN}/lib/codemirror.min.css`, 'text/css')
@@ -55,11 +55,11 @@ mw.hook('InPageEdit').add(({ InPageEdit }) =>
     function getScript(url) {
       return typeof url === 'string'
         ? $.ajax({
-            url,
-            dataType: 'script',
-            crossDomain: true,
-            cache: true,
-          })
+          url,
+          dataType: 'script',
+          crossDomain: true,
+          cache: true,
+        })
         : mw.loader.using(url.flat())
     }
 
@@ -261,9 +261,9 @@ mw.hook('InPageEdit').add(({ InPageEdit }) =>
           styleActiveLine: true,
           extraKeys: wikiEditor
             ? {
-                'Ctrl-F': search(target),
-                'Cmd-F': search(target),
-              }
+              'Ctrl-F': search(target),
+              'Cmd-F': search(target),
+            }
             : { 'Alt-F': 'findPersistent' },
           theme: THEME,
           mode,

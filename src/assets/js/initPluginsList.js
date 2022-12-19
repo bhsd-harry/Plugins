@@ -1,4 +1,4 @@
-;(() => {
+(() => {
   const container = document.getElementById('plugins-list')
 
   const table = document.createElement('table')
@@ -18,8 +18,9 @@
     let listEl = document.createElement('tr')
 
     author = author || '-'
-    if (author !== '-')
+    if (author !== '-') {
       author = `<a href="https://github.com/${author}" target="_blank">@${author}</a>`
+    }
 
     listEl.innerHTML = `
     <th><a href="plugins/${key}" target="_blank">${name}</a></th>
