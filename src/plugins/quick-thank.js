@@ -181,7 +181,7 @@ mw.hook('InPageEdit').add(({ _msg }) => {
         )
       })
 
-      $thankAll = $('<div>', { class: 'thank-all' })
+      const $thankAll = $('<div>', { class: 'thank-all' })
         .css({ 'text-align': 'center' })
         .append(
           $('<button>', {

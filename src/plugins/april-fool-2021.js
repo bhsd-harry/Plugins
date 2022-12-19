@@ -1,6 +1,7 @@
 !(() => {
-  if (window.InPageEditAprilFool2021)
+  if (window.InPageEditAprilFool2021) {
     return console.warn('[InPageEdit] 2021 愚人节源码被多次载入')
+  }
   window.InPageEditAprilFool2021 = true
   const isLoaded = localStorage.getItem('InPageEditAprilFool2021')
 
