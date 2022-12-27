@@ -38,7 +38,7 @@
       Object.keys(json).forEach((k) => {
         add(k, json[k])
       })
-    })
+    }, () => {})
 
   table.appendChild(thead)
   table.appendChild(tbody)
