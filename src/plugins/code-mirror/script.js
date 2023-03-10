@@ -47,7 +47,7 @@ mw.hook('InPageEdit').add(({ InPageEdit }) =>
     if (!USING_LOCAL) {
       mw.loader.load(`${CM_CDN}/lib/codemirror.min.css`, 'text/css')
     }
-    mw.loader.load(`${PLUGIN_CDN}/plugins/code-mirror/style.css`, 'text/css')
+    mw.loader.load(`${PLUGIN_CDN}/src/plugins/code-mirror/style.css`, 'text/css')
     if (!InPageEdit.preference.get('codeMirrorThemeNoCSS')) {
       mw.loader.load(`${CM_CDN}/theme/${THEME.split(' ')[0]}.min.css`, 'text/css')
     }
