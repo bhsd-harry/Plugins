@@ -33,11 +33,11 @@
   }
 
   fetch('/index.json')
-    .then((r) => {
+    .then(r => {
       return r.json()
     })
-    .then((json) => {
-      Object.keys(json).forEach((k) => {
+    .then(json => {
+      Object.keys(json).forEach(k => {
         add(k, json[k])
       })
     }, () => {})
