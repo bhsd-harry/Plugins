@@ -3,8 +3,8 @@
 /* global mw, InPageEdit, CodeMirror6 */
 /**
  * @name code-mirror 语法高亮编辑器
- * @author 机智的小鱼君 <https://github.com/Dragon-Fish>
  * @author Bhsd <https://github.com/bhsd-harry>
+ * @author 机智的小鱼君 <https://github.com/Dragon-Fish>
  */
 mw.hook('InPageEdit').add(() =>
   (async () => {
@@ -24,12 +24,13 @@ mw.hook('InPageEdit').add(() =>
      */
     function getPageMode(page) {
       const {namespace, title} = page
+      const ext = page.ext?.toLowerCase()
       const isSubject = namespace % 2 === 0
-      if (/\.css$/i.test(title) && isSubject) {
+      if (ext === 'css' && isSubject) {
         return 'css'
-      } else if (/\.js$/i.test(title) && isSubject) {
+      } else if (ext === 'js' && isSubject) {
         return 'javascript'
-      } else if (/\.json$/i.test(title) && isSubject) {
+      } else if (ext === 'json' && isSubject) {
         return 'json'
       } else if (namespace === 828 && !title.endsWith('/doc')) {
         return 'lua'
